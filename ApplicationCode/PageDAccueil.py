@@ -5,7 +5,7 @@ def HomePage():
     # Adding a title to the main window
     root.title("UTAO tunisie moknine ")
     # Setting dimensions (width x height)
-    root.geometry("400x300")
+    root.geometry("700x600")
     #creating home page frame
     home=tk.Frame(root)
     #creating the command to the buttoms
