@@ -18,7 +18,7 @@ def HomePage():
         home.pack_forget()
         # calling the function FormPage from the file formPage
         import formPage as fp
-        fp.FormPage(form)
+        fp.FormPage(form,root)
 
     def ViewSubscriberList():
         # to make sure that everything is okkey
@@ -32,12 +32,12 @@ def HomePage():
         vp.SubscriberPage(view)
 
     # Create buttons
-    button1 = tk.Button(home, text="إضافة مشترك جديد ", command=AddAFarmer)
-    button2 = tk.Button(home, text="عرض قائمة المشتركين", command=ViewSubscriberList)
+    AddingInscriptionButton = tk.Button(home, text="إضافة مشترك جديد ", command=AddAFarmer)
+    ViewSubscribersButton = tk.Button(home, text="عرض قائمة المشتركين", command=ViewSubscriberList)
 
     # Place buttons in the home page
-    button1.pack(pady=20)
-    button2.pack()
+    AddingInscriptionButton.pack(pady=20)
+    ViewSubscribersButton.pack()
     #showing the home page
     home.pack()
     # Start the GUI event loop
