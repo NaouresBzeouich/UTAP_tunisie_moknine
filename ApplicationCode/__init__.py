@@ -1,2 +1,2 @@
-from tkinter import *
-
+from PageDAccueil import *
+HomePage()
