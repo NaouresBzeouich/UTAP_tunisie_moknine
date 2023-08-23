@@ -1,7 +1,11 @@
 import tkinter as tk
 from tkinter import ttk
 
-def SubscriberPage(view):
+def SubscriberPage(view,home):
+    # function to handle the return the home page
+    def return_to_home():
+        view.pack_forget()
+        home.pack()
     def delete_rows_after(row_index):
         for i in range(row_index + 1, len(grid_cells)):
             for col_index in range(len(grid_cells[i])):
@@ -29,7 +33,7 @@ def SubscriberPage(view):
             row_cells = []
             for j, cell_value in enumerate(row_data):
                 label = tk.Label(excel_frame, text=str(cell_value))
-                label.grid(row=i + 10, column=j, padx=10, pady=10)
+                label.grid(row=i + 10, column=j+1, padx=10, pady=10)
                 row_cells.append(label)
             grid_cells.append(row_cells)
     view.pack(fill="both", expand=True)
@@ -37,6 +41,7 @@ def SubscriberPage(view):
     grid_cells = []
     canvas = tk.Canvas(view)
     canvas.pack(side="left", fill="both", expand=True)
+
     # to create the scrollbar in the left
     scrollbar = ttk.Scrollbar(view, command=canvas.yview)
     scrollbar.pack(side="right", fill="y")
@@ -44,25 +49,38 @@ def SubscriberPage(view):
 
     excel_frame = ttk.Frame(canvas)
     canvas.create_window((0, 0), window=excel_frame, anchor="nw")
+
     # create a place to do searching
     labels = [": اسم ", ": اللقب ", " : رقم بطاقة الهوية الوطنية ", ": رقم الهاتف ", " : المنطقة ", " : تخصص"]
-    entries = [tk.Entry(excel_frame) for _ in range(6)]
+    entries = [ttk.Entry(excel_frame, font=("Helvetica", 30)) for _ in range(6)]
+
     # Place labels and entry fields in the frame
     for i, label in enumerate(labels):
         row_cells = []
-        ttk.Label(excel_frame, text=label).grid(row=i , column=2, padx=20, pady=5)
-        entries[i].grid(row=i, column=1, padx=10, pady=5)
+        ttk.Label(excel_frame, text="\t\t", font=("Helvetica", 20)).grid(row=i, column=1)
+        ttk.Label(excel_frame, text="\t\t", font=("Helvetica", 20)).grid(row=i, column=2)
+        entries[i].grid(row=i, column=3, padx=20, pady=10, sticky="e")
+        ttk.Label(excel_frame, text=label, font=("Helvetica", 25), anchor="e").grid(row=i , column=4, padx=20, pady=5, sticky="e")
+
         row_cells.append(label)
         row_cells.append(entries[i].get())
         grid_cells.append(row_cells)
-    # creating search button
-    submit_button = ttk.Button(excel_frame, text="بحث عن المشتركين ", command=search)
-    submit_button.grid(row=8, columnspan=3, padx=10, pady=10)
+
+    # creating buttons
+    submit_button = ttk.Button(excel_frame, text="بحث عن المشتركين ", command=search, padding=8)
+    submit_button.grid(row=8, column=3, sticky="e")
+    ttk.Label(excel_frame, text="\t").grid(row=8, column=4)
+    ttk.Label(excel_frame, text="\t").grid(row=8, column=0)
+    return_to_home_btn = ttk.Button(excel_frame, text=" الرجوع إلى الصفحة الرئيسية ", command=return_to_home, padding=8)
+    return_to_home_btn.grid(row=8, column=1, pady=20)
+
+
+
     # to show data first row
     row_cells = []
     for i, label in enumerate(labels):
         row_cells.append(label)
-        ttk.Label(excel_frame, text=label).grid(row=9, column=i, padx=20, pady=5)
+        ttk.Label(excel_frame, text=label, relief="solid", borderwidth=1, padding=8, anchor="e", font=("Helvetica", 20)).grid(row=9, column=i+1, pady=20,  sticky="nsew")
     grid_cells.append(row_cells)
     excel_frame.bind("<Configure>", lambda event: canvas.configure(scrollregion=canvas.bbox("all")))
 

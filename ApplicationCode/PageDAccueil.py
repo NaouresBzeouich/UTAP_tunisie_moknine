@@ -4,10 +4,19 @@ from tkinter import ttk
 def HomePage():
     # Create the main window
     root = tk.Tk()
+
     # Adding a title to the main window
-    root.title("UTAO tunisie moknine ")
+    root.title("الاتحاد التونسي للفلاحة والصيد البحري Union tunisienne de l'agriculture et de la pêche  ")
+
     # Setting dimensions (width x height)
-    root.geometry("800x600")
+    root.geometry("1900x1000")
+
+    # Set the path to your custom icon file (use a .ico format)
+    iconpath = 'C:/Users/R I B/Desktop/STAGE/UTAP_tunisie_moknine/utap (2).ico'
+
+    # Set the window's icon
+    root.iconbitmap(iconpath)
+
     # creating home page frame
     home = ttk.Frame(root)
 
@@ -32,16 +41,24 @@ def HomePage():
         home.pack_forget()
         # calling the function ViewSubscriberPage from the file viewSubscriberPage
         import viewSubscribrPage as vp
-        vp.SubscriberPage(view)
+        vp.SubscriberPage(view,home)
 
     # Create buttons
     AddingInscriptionButton = ttk.Button(home, text="إضافة مشترك جديد ", command=AddAFarmer)
     ViewSubscribersButton = ttk.Button(home, text="عرض قائمة المشتركين", command=ViewSubscriberList)
 
     # Place buttons in the home page
-    AddingInscriptionButton.pack(pady=20)
-    ViewSubscribersButton.pack()
+    for i in range(10):
+        ttk.Label(home, text="\n").grid(row=i)
+    AddingInscriptionButton.grid(row=10, columnspan=1, padx=10, pady=10)
+    ttk.Label(home, text="\n").grid(row=11)
+    ViewSubscribersButton.grid(row=12, columnspan=1, padx=10, pady=10)
+
     # showing the home page
     home.pack()
+
+    # Increase the button size
+    ttk.Style().configure("TButton", font=("Helvetica", 30), padding=5, anchor="e")
+
     # Start the GUI event loop
     root.mainloop()
