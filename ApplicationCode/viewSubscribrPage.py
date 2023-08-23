@@ -51,7 +51,7 @@ def SubscriberPage(view,home):
     canvas.create_window((0, 0), window=excel_frame, anchor="nw")
 
     # create a place to do searching
-    labels = [": اسم ", ": اللقب ", " : رقم بطاقة الهوية الوطنية ", ": رقم الهاتف ", " : المنطقة ", " : تخصص"]
+    labels = [": اسم ", ": اللقب ", " : رقم بطاقة الهوية الوطنية ", ": رقم الهاتف ", " : المنطقة ", " :النقابات القطاعية"]
     entries = [ttk.Entry(excel_frame, font=("Helvetica", 30)) for _ in range(6)]
 
     # Place labels and entry fields in the frame
