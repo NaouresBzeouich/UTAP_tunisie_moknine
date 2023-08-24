@@ -95,7 +95,6 @@ def validate_number(input_value):
         return True
     return False
 
-
 # Validation function input (choices)
 def validate_choice_speciality(input_value):
     # List of allowed choices
@@ -104,17 +103,14 @@ def validate_choice_speciality(input_value):
         return True
     return False
 
-
 # Function to validate all entries
 def validate_entries(form, entries, selected_option):
     validation_results = {}
-
     for i in range(5):
         if entries[i].get() == "":
             validation_results[i] = False
         else:
             validation_results[i] = True
-
 
     validation_results[2] = validate_number(entries[2].get())
     validation_results[3] = validate_number(entries[3].get())

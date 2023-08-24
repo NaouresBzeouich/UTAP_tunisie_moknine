@@ -18,20 +18,24 @@ def SubscriberPage(view,home):
 
         for i, row_data in enumerate(excel_data):
             test = True
-            for j, cell_value in enumerate(row_data):
+            for j in range(6):
+                cell_value = row_data[j]
                 if entries[j].get() == '':
                     continue
                 else:
                     if entries[j].get() != str(cell_value) :
                         test = False
                         break
-            if test :
+            if test:
                 data.append(row_data)
 
         # to show data
         for i, row_data in enumerate(data):
             row_cells = []
             for j, cell_value in enumerate(row_data):
+                if j == 6:
+                    if cell_value is None:
+                        continue
                 label = tk.Label(excel_frame, text=str(cell_value))
                 label.grid(row=i + 10, column=j+1, padx=10, pady=10)
                 row_cells.append(label)
@@ -72,7 +76,7 @@ def SubscriberPage(view,home):
     ttk.Label(excel_frame, text="\t").grid(row=8, column=4)
     ttk.Label(excel_frame, text="\t").grid(row=8, column=0)
     return_to_home_btn = ttk.Button(excel_frame, text=" الرجوع إلى الصفحة الرئيسية ", command=return_to_home, padding=8)
-    return_to_home_btn.grid(row=8, column=1, pady=20)
+    return_to_home_btn.grid(row=8, column=1,columnspan=2 ,  pady=20)
 
 
 
