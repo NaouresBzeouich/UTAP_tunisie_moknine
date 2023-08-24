@@ -52,7 +52,7 @@ def HomePage():
         home.pack_forget()
         # calling the function ViewSubscriberPage from the file viewSubscriberPage
         import SubscriberDeletionPage as sp
-        sp.SubscriberDeletion(delete, home)
+        sp.SubscriberDeletion(delete, home,root)
     # Create buttons
     AddingInscriptionButton = ttk.Button(home, text="إضافة مشترك جديد ", command=AddAFarmer)
     ViewSubscribersButton = ttk.Button(home, text="عرض قائمة المشتركين", command=ViewSubscriberList)

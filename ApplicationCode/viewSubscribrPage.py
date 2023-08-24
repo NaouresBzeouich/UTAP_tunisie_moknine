@@ -30,13 +30,15 @@ def SubscriberPage(view, home):
         entries.append(combobox.get())
         if combobox.get() == "الماشية":
             entries.append(cattle_combobox.get())
+        else:
+            entries.append("")
         delete_rows_after(6)
         excel_data = read_excel_data("subscriberlist.xlsx")
         data = []
 
         for i, row_data in enumerate(excel_data):
             test = True
-            for j in range(6):
+            for j in range(7):
                 cell_value = row_data[j]
                 if entries[j] == '':
                     continue
