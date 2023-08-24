@@ -1,9 +1,11 @@
 import tkinter as tk
 from tkinter import ttk
-def SubscriberDeletion(delete, home,root):
-    #function to the button delete subscriber
+
+
+def SubscriberDeletion(delete, home, root):
+    # function to the button delete subscriber
     def delete_subscriber():
-        #saving the entries
+        # saving the entries
         data = [entry.get() for entry in entries]
         data.append(combobox.get())
         if combobox.get() == "الماشية":
@@ -25,13 +27,15 @@ def SubscriberDeletion(delete, home,root):
                         break
             if test:
                 rows_to_delete.append(i)
-        #creating the new frame that contains subscriber list to delete
+
+        # creating the new frame that contains subscriber list to delete
         deleteList = ttk.Frame(root)
         # hiding the delete page which is the current page
         delete.pack_forget()
         # calling the function deleteList from the file viewSubscriberPage
         import DeletionListPage as dl
-        dl.DeletionList(deleteList, home)
+        dl.DeletionList(deleteList, home, rows_to_delete)
+
     # function for selecting the type of cattle
     def cattle_select(event):
         option = selected_option.get()
@@ -66,7 +70,7 @@ def SubscriberDeletion(delete, home,root):
         else:
             entries[i].grid(row=i, column=2, padx=20, pady=30, sticky="e")
         ttk.Label(delete, text=label, font=("Helvetica", 25), anchor="e").grid(row=i, column=3, padx=20, pady=5,
-                                                                             sticky="e")
+                                                                               sticky="e")
     # Create a Combobox for specifying the type of cattle
     cattle_selected_option = tk.StringVar()
     cattle_combobox = ttk.Combobox(delete, textvariable=cattle_selected_option, font=("Helvetica", 30))
@@ -81,6 +85,8 @@ def SubscriberDeletion(delete, home,root):
     # creating return to home button
     submit_button = ttk.Button(delete, text=" الرجوع إلى الصفحة الرئيسية ", command=return_to_home)
     submit_button.grid(row=8, columns=1, padx=10, pady=10)
+
+
 def read_excel_data(file_path):
     import openpyxl
     workbook = openpyxl.load_workbook(file_path)
