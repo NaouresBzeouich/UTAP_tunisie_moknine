@@ -43,17 +43,29 @@ def HomePage():
         import viewSubscribrPage as vp
         vp.SubscriberPage(view,home)
 
+    def deleteASubscriber():
+        # to make sure that everything is okkey
+        print("Button to delete a subscriber is clicked !")
+        # creating the subscriber deletion page
+        delete = ttk.Frame(root)
+        # hiding the home page which is the current page
+        home.pack_forget()
+        # calling the function ViewSubscriberPage from the file viewSubscriberPage
+        import SubscriberDeletionPage as sp
+        sp.SubscriberDeletion(delete, home)
     # Create buttons
     AddingInscriptionButton = ttk.Button(home, text="إضافة مشترك جديد ", command=AddAFarmer)
     ViewSubscribersButton = ttk.Button(home, text="عرض قائمة المشتركين", command=ViewSubscriberList)
+    deleteASubscriberButton = ttk.Button(home, text="حذف مشترك ", command=deleteASubscriber)
 
     # Place buttons in the home page
-    for i in range(10):
+    for i in range(7):
         ttk.Label(home, text="\n").grid(row=i)
-    AddingInscriptionButton.grid(row=10, columnspan=1, padx=10, pady=10)
+    AddingInscriptionButton.grid(row=8, padx=10, pady=10)
+    ttk.Label(home, text="\n").grid(row=9)
+    ViewSubscribersButton.grid(row=10, padx=10, pady=10)
     ttk.Label(home, text="\n").grid(row=11)
-    ViewSubscribersButton.grid(row=12, columnspan=1, padx=10, pady=10)
-
+    deleteASubscriberButton.grid(row=12, padx=10, pady=10)
     # showing the home page
     home.pack()
 
