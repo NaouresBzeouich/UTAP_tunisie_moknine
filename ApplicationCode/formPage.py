@@ -26,6 +26,13 @@ def Form_Page(form, root, home):
             ttk.Label(form, text=text, font=("Helvetica", 25), anchor="e",foreground="red").grid(row=9, column=1, columnspan=4, padx=40, pady=20, sticky="e")
         else:
             ttk.Label(form, text="\t\t\t\t\t\t\t\t", font=("Helvetica", 25), anchor="e",foreground="red").grid(row=9, column=1, columnspan=4, padx=40, pady=20, sticky="e")
+    #function to appear msg for existing subscriber with the same CIN
+    def print_Subscriber_Already_exist(number):
+        subscriber_exist = ttk.Label(form, text=" ! المشترك صاحب هذه بطاقة التعريف الوطنية منخرط في المنضومة سابقا  ", font=("Helvetica", 30), anchor="center", foreground="red", background="white")
+        subscriber_exist.grid(row=9, column=1, columnspan=4, padx=10, pady=10)
+        def forget():
+            subscriber_exist.grid_forget()
+        root.after(4000, forget)
 
     #function to handle the return the home page
     def return_to_home():
@@ -34,16 +41,28 @@ def Form_Page(form, root, home):
     # Function to handle the form submission
     def submit_form():
         validation_results = validate_entries(form, entries, selected_option)
+        print_Errors(validation_results)
         if all(validation_results.values()):
             data = [entry.get() for entry in entries]
             data.append(combobox.get())
             if combobox.get() == "الماشية" :
                 data.append(cattle_combobox.get())
-            save_to_excel(data)
-            print("Form submitted!")
-            return_to_home()
+
+            # test if there's another subscriber with the same CIN
+            excel_data = read_excel_data("subscriberlist.xlsx")
+            test = True
+            for i, row_data in enumerate(excel_data):
+                if data[2] == row_data[2]:
+                    test = False
+                    break
+            if test:
+                save_to_excel(data)
+                print("Form submitted!")
+                return_to_home()
+            else:
+                print_Subscriber_Already_exist(data[2])
+                print("the person withb this national carte number already exist !")
         else:
-            print_Errors(validation_results)
             print("Form validation failed. Please check your inputs.")
 
     # function for selecting the type of cattle
