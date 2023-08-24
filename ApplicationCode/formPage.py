@@ -37,6 +37,8 @@ def Form_Page(form, root, home):
         if all(validation_results.values()):
             data = [entry.get() for entry in entries]
             data.append(combobox.get())
+            if combobox.get() == "الماشية" :
+                data.append(cattle_combobox.get())
             save_to_excel(data)
             print("Form submitted!")
             return_to_home()
