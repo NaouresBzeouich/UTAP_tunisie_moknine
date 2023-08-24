@@ -1,6 +1,32 @@
 import tkinter as tk
 from tkinter import ttk
 def Form_Page(form, root, home):
+    #Function to print the invalid results messages
+    def print_Errors(table):
+        text = "الرجاء التثبت "
+        if not(table[0]) :
+            text += "من الاسم ,"
+        if not(table[1]) :
+            text += "من اللقب ,"
+        if not(table[2]) :
+            text += "من رقم بطاقة الهوية الوطنية ,"
+        if not(table[3]) :
+            text += "من  رقم الهاتف ,"
+        if not(table[4]) :
+            text += "من المنطقة  ,"
+        if not(table[5]) :
+            text += "من  النقابات القطاعية ,"
+        if not(all((table.values()))):
+            ttk.Label(form, text="\t\t\t\t\t\t\t\t\t\t", font=("Helvetica", 25), anchor="e", foreground="red").grid(row=9,
+                                                                                                                column=1,
+                                                                                                                columnspan=4,
+                                                                                                                padx=40,
+                                                                                                                pady=20,
+                                                                                                                sticky="e")
+            ttk.Label(form, text=text, font=("Helvetica", 25), anchor="e",foreground="red").grid(row=9, column=1, columnspan=4, padx=40, pady=20, sticky="e")
+        else:
+            ttk.Label(form, text="\t\t\t\t\t\t\t\t", font=("Helvetica", 25), anchor="e",foreground="red").grid(row=9, column=1, columnspan=4, padx=40, pady=20, sticky="e")
+
     #function to handle the return the home page
     def return_to_home():
         form.pack_forget()
@@ -15,6 +41,7 @@ def Form_Page(form, root, home):
             print("Form submitted!")
             return_to_home()
         else:
+            print_Errors(validation_results)
             print("Form validation failed. Please check your inputs.")
 
     # function for selecting the type of cattle
@@ -49,7 +76,7 @@ def Form_Page(form, root, home):
     # Create a Combobox for specifying the type of cattle
     cattle_selected_option = tk.StringVar()
     cattle_combobox = ttk.Combobox(form, textvariable=cattle_selected_option, font=("Helvetica", 30))
-    cattle_combobox["values"] = ("الماشية", "الأبقار")
+    cattle_combobox["values"] = ("الأغنام", "الأبقار")
 
     # Bind the event handler to the cattle selection
     combobox.bind("<<ComboboxSelected>>", cattle_select)
@@ -80,33 +107,16 @@ def validate_choice_speciality(input_value):
 def validate_entries(form, entries, selected_option):
     validation_results = {}
 
-    for i in range(6):
-        validation_results[i] = True
+    for i in range(5):
+        if entries[i].get() == "":
+            validation_results[i] = False
+        else:
+            validation_results[i] = True
+
 
     validation_results[2] = validate_number(entries[2].get())
     validation_results[3] = validate_number(entries[3].get())
     validation_results[5] = validate_choice_speciality(selected_option.get())
-
-    if validation_results[3]:
-        tk.Label(form, anchor="e", text="                                                                 ").grid(row=3, column=1, sticky="e")
-    else:
-        tk.Label(form, anchor="e", text="رقم هاتف خاطئ يرجى إعادة التحقق منه ").grid(row=3, column=1, sticky="e")
-    if validation_results[2]:
-        tk.Label(form, anchor="e", text="                                                                     ").grid(row=2, column=1, sticky="e")
-    else:
-        tk.Label(form, anchor="e", text="رقم البطاقة الوطنية خاطئ يرجى إعادة التحقق منه ").grid(row=2,  column=1, sticky="e")
-    if validation_results[5]:
-        tk.Label(form, anchor="e", text="                                                     ").grid(row=5, column=1, sticky="e")
-    else:
-        tk.Label(form, anchor="e", text="التخصص غير مبرمج بالشبكة").grid(row=5, column=1, sticky="e")
-    if entries[0].get() == "":
-        tk.Label(form, anchor="e", text="خانة الاسم إلزامية").grid(row=0, column=1, sticky="e")
-    else:
-        tk.Label(form, anchor="e", text="                               ").grid(row=0, column=1, sticky="e")
-    if entries[1].get() == "":
-        tk.Label(form, anchor="e", text="خانة اللقب إلزامية").grid(row=1, column=1, sticky="e")
-    else:
-        tk.Label(form, anchor="e", text="                                ").grid(row=1, column=1, sticky="e")
 
     return validation_results
 
