@@ -1,29 +1,47 @@
 import tkinter as tk
 from tkinter import ttk
 
-def SubscriberPage(view,home):
+
+def SubscriberPage(view, home):
+    # function for selecting the type of cattle
+    def cattle_select(event):
+        option = selected_option.get()
+        print("combobox selected")
+        # Check if the selected option is "op1"
+        if option == "الماشية":
+            print("option cattle selected")
+            cattle_combobox.grid(row=5, column=2, columnspan=2, padx=20, pady=10, sticky="e")
+        else:
+            cattle_combobox.grid_forget()
+
     # function to handle the return the home page
     def return_to_home():
         view.pack_forget()
         home.pack()
+
     def delete_rows_after(row_index):
         for i in range(row_index + 1, len(grid_cells)):
             for col_index in range(len(grid_cells[i])):
                 grid_cells[i][col_index].grid_forget()
         grid_cells[row_index + 1:] = []
+
     def search():
+        entries = [entries_writed[i].get() for i in range(5)]
+        entries.append(combobox.get())
+        if combobox.get() == "الماشية":
+            entries.append(cattle_combobox.get())
         delete_rows_after(6)
         excel_data = read_excel_data("subscriberlist.xlsx")
-        data =[]
+        data = []
 
         for i, row_data in enumerate(excel_data):
             test = True
             for j in range(6):
                 cell_value = row_data[j]
-                if entries[j].get() == '':
+                if entries[j] == '':
                     continue
                 else:
-                    if entries[j].get() != str(cell_value) :
+                    if entries[j] != str(cell_value):
                         test = False
                         break
             if test:
@@ -37,9 +55,10 @@ def SubscriberPage(view,home):
                     if cell_value is None:
                         continue
                 label = tk.Label(excel_frame, text=str(cell_value))
-                label.grid(row=i + 10, column=j+1, padx=10, pady=10)
+                label.grid(row=i + 10, column=j + 2, padx=10, pady=10)
                 row_cells.append(label)
             grid_cells.append(row_cells)
+
     view.pack(fill="both", expand=True)
     global grid_cells
     grid_cells = []
@@ -55,38 +74,52 @@ def SubscriberPage(view,home):
     canvas.create_window((0, 0), window=excel_frame, anchor="nw")
 
     # create a place to do searching
-    labels = [": اسم ", ": اللقب ", " : رقم بطاقة الهوية الوطنية ", ": رقم الهاتف ", " : المنطقة ", " :النقابات القطاعية"]
-    entries = [ttk.Entry(excel_frame, font=("Helvetica", 30)) for _ in range(6)]
+    tk.Label(excel_frame, text="\t\t").grid(row=0, column=1, padx=10, pady=10)
+    labels = [": اسم ", ": اللقب ", " : رقم بطاقة الهوية الوطنية ", ": رقم الهاتف ", " : المنطقة ",
+              " :النقابات القطاعية"]
+    entries_writed = [ttk.Entry(excel_frame, font=("Helvetica", 30)) for _ in range(5)]
 
     # Place labels and entry fields in the frame
     for i, label in enumerate(labels):
         row_cells = []
-        ttk.Label(excel_frame, text="\t\t", font=("Helvetica", 20)).grid(row=i, column=1)
-        ttk.Label(excel_frame, text="\t\t", font=("Helvetica", 20)).grid(row=i, column=2)
-        entries[i].grid(row=i, column=3, padx=20, pady=10, sticky="e")
-        ttk.Label(excel_frame, text=label, font=("Helvetica", 25), anchor="e").grid(row=i , column=4, padx=20, pady=5, sticky="e")
-
+        ttk.Label(excel_frame, text=label, font=("Helvetica", 25), anchor="e").grid(row=i, column=6,columnspan=2, padx=20, pady=5,
+                                                                                    sticky="e")
         row_cells.append(label)
-        row_cells.append(entries[i].get())
+        if i < 5:
+            entries_writed[i].grid(row=i, column=4, columnspan=2, padx=20, pady=10, sticky="e")
+            row_cells.append(entries_writed[i].get())
+        else:
+            # Create a Combobox
+            selected_option = tk.StringVar()
+            combobox = ttk.Combobox(excel_frame, textvariable=selected_option, font=("Helvetica", 30))
+            combobox["values"] = ("الزياتين", "النحل", "السقوي", "الماشية", "الصيد الساحلي", "الصيد بالأضواء")
+            combobox.grid(row=i, column=4, columnspan=2, padx=20, pady=10, sticky="e")
+            row_cells.append(combobox.get())
         grid_cells.append(row_cells)
+
+    # Create a Combobox for specifying the type of cattle
+    cattle_selected_option = tk.StringVar()
+    cattle_combobox = ttk.Combobox(excel_frame, textvariable=cattle_selected_option, font=("Helvetica", 30))
+    cattle_combobox["values"] = ("الأغنام", "الأبقار")
+
+    # Bind the event handler to the cattle selection
+    combobox.bind("<<ComboboxSelected>>", cattle_select)
 
     # creating buttons
     submit_button = ttk.Button(excel_frame, text="بحث عن المشتركين ", command=search, padding=8)
-    submit_button.grid(row=8, column=3, sticky="e")
-    ttk.Label(excel_frame, text="\t").grid(row=8, column=4)
-    ttk.Label(excel_frame, text="\t").grid(row=8, column=0)
+    submit_button.grid(row=8, column=4,columnspan=2, sticky="e")
     return_to_home_btn = ttk.Button(excel_frame, text=" الرجوع إلى الصفحة الرئيسية ", command=return_to_home, padding=8)
-    return_to_home_btn.grid(row=8, column=1,columnspan=2 ,  pady=20)
-
-
+    return_to_home_btn.grid(row=8, column=2, columnspan=2, pady=20)
 
     # to show data first row
     row_cells = []
     for i, label in enumerate(labels):
         row_cells.append(label)
-        ttk.Label(excel_frame, text=label, relief="solid", borderwidth=1, padding=8, anchor="e", font=("Helvetica", 20)).grid(row=9, column=i+1, pady=20,  sticky="nsew")
+        ttk.Label(excel_frame, text=label, relief="solid", borderwidth=1, padding=8, anchor="e",
+                  font=("Helvetica", 20)).grid(row=9, column=i + 2, pady=20, sticky="nsew")
     grid_cells.append(row_cells)
     excel_frame.bind("<Configure>", lambda event: canvas.configure(scrollregion=canvas.bbox("all")))
+
 
 def read_excel_data(file_path):
     import openpyxl
@@ -98,7 +131,3 @@ def read_excel_data(file_path):
         data.append(row)
 
     return data
-
-
-
-
