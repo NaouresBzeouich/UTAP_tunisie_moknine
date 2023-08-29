@@ -15,18 +15,20 @@ def SubscriberDeletion(delete, home, root):
         # test if there's subscriber with same details
         rows_to_delete = []
         excel_data = read_excel_data("subscriberlist.xlsx")
+        row_number = 0
         for i, row_data in enumerate(excel_data):
             test = True
             for j in range(7):
                 cell_value = row_data[j]
-                if entries[j] == '':
+                if data[j] == '':
                     continue
                 else:
-                    if entries[j] != str(cell_value):
+                    if data[j] != str(cell_value):
                         test = False
                         break
             if test:
-                rows_to_delete.append(i)
+                row_number += 1
+                rows_to_delete.append(row_data)
 
         # creating the new frame that contains subscriber list to delete
         deleteList = ttk.Frame(root)
@@ -34,7 +36,7 @@ def SubscriberDeletion(delete, home, root):
         delete.pack_forget()
         # calling the function deleteList from the file viewSubscriberPage
         import DeletionListPage as dl
-        dl.DeletionList(deleteList, home, rows_to_delete)
+        dl.DeletionList(deleteList, home, rows_to_delete, row_number)
 
     # function for selecting the type of cattle
     def cattle_select(event):
