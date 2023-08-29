@@ -18,16 +18,18 @@ def DeletionList(deleteList, home, rows_to_delete, row_number):
     def return_to_home():
         deleteList.pack_forget()
         home.pack()
-
-    i = 0
+    # function to delete subscribers
+    def deletion():
+        print("okkey")
     if rows_to_delete:
         # text for make sure the deletion
-        ttk.Label(List, text=" هل أنت متأكد من حذف هؤلاء المشتركين  ", font=("Helvetica", 50), anchor="center",
-                  foreground="red", background="white").grid(row=1, column=0, columnspan=9, padx=10, pady=10)
+        ttk.Label(List, text="  هل  أنت  متأكد  من  حذف  هؤلاء  المشتركين   ", font=("Helvetica", 60), anchor="center",
+                  foreground="red", background="white").grid(row=1, column=1, columnspan=8, padx=10, pady=10)
         # table contain selected subscriber
-        labels = [": اسم ", ": اللقب ", " : رقم بطاقة الهوية الوطنية ", ": رقم الهاتف ", " : المنطقة ",
-                  " :النقابات القطاعية"]
+        labels = ["\t",": اسم ", ": اللقب ", " : رقم بطاقة الهوية الوطنية ", ": رقم الهاتف ", " : المنطقة ",
+                  " :النقابات القطاعية","\t"]
         # to show data first row
+        ttk.Label(List, text="\t\t\t", padding=8, font=("Helvetica", 20)).grid(row=2, column=0, pady=20)
         for i, label in enumerate(labels):
             ttk.Label(List, text=label, relief="solid", borderwidth=1, padding=8, anchor="e",
                       font=("Helvetica", 20)).grid(row=2, column=i + 1, pady=20, sticky="nsew")
@@ -40,13 +42,16 @@ def DeletionList(deleteList, home, rows_to_delete, row_number):
                     if cell_value is None:
                         continue
                 label = tk.Label(List, text=str(cell_value))
-                label.grid(row=i + 3, column=j + 1, padx=10, pady=10)
+                label.grid(row=i + 3, column=j + 2, padx=10, pady=10)
                 row_cell.append(label)
             grid_cell.append(row_cell)
     else:
         ttk.Label(List, text=" لا يوجد مشتركين بهذه المعطيات  ", font=("Helvetica", 50), anchor="center",
-                  foreground="red", background="white").grid(row=1, column=0, columnspan=9, padx=10, pady=10)
+                  foreground="red", background="white").grid(row=1, column=1, columnspan=9, padx=10, pady=10)
 
     # creating return to home button
     submit_button = ttk.Button(List, text=" الرجوع إلى الصفحة الرئيسية ", command=return_to_home)
-    submit_button.grid(row=i + 5, columns=1, padx=10, pady=10)
+    submit_button.grid(row=row_number + 6, column=0, columnspan=3, padx=10, pady=10)
+    # creating deletion button
+    submit_button = ttk.Button(List, text=" حذف ", command=deletion)
+    submit_button.grid(row=row_number + 6, column=6, columnspan=3, padx=10, pady=10)

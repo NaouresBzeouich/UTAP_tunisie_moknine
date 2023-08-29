@@ -45,7 +45,7 @@ def SubscriberDeletion(delete, home, root):
         # Check if the selected option is "op1"
         if option == "الماشية":
             print("option cattle selected")
-            cattle_combobox.grid(row=5, column=2, columnspan=2, padx=20, pady=10, sticky="e")
+            cattle_combobox.grid(row=5, column=0, columnspan=2, padx=20, pady=10, sticky="e")
         else:
             cattle_combobox.grid_forget()
 
