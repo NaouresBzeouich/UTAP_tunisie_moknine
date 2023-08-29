@@ -21,6 +21,7 @@ def DeletionList(deleteList, home, rows_to_delete, row_number):
     # function to delete subscribers
     def deletion():
         print("okkey")
+        return_to_home()
     if rows_to_delete:
         # text for make sure the deletion
         ttk.Label(List, text="  هل  أنت  متأكد  من  حذف  هؤلاء  المشتركين   ", font=("Helvetica", 60), anchor="center",
