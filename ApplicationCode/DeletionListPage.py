@@ -21,12 +21,19 @@ def DeletionList(deleteList, home, rows_to_delete, row_number):
 
     # function to delete subscribers
     def deletion():
-        print("okkey")
+        table = []
+        for a in range(row_number):
+            if tik_var[a].get() == 1:
+                table.append(a)
+        import openpyxl as pxy
+        # Load the Excel workbook
+        excel_file_path = "subscriberlist.xlsx"
+        workbook = pxy.load_workbook(excel_file_path)
+        worksheet = workbook['Sheet']
+        # Iterate in reverse order to delete rows without affecting indices
+        for row_index in reversed(table):
+            worksheet.delete_rows(row_index)
         return_to_home()
-
-    # function when checkbtn is clicked
-    def toggle_tik(i):
-        print(table[i])
 
     if rows_to_delete:
         # text for make sure the deletion
@@ -42,17 +49,15 @@ def DeletionList(deleteList, home, rows_to_delete, row_number):
                       font=("Helvetica", 20)).grid(row=2, column=i + 1, pady=20, sticky="nsew")
 
         # Create  Checkbutton variables
-        tik_var = [tk.IntVar() for _ in range(row_number)]
-        table = [i for i in range(row_number)]
-        print(table)
+        tik_var = [tk.IntVar(value=1) for _ in range(row_number)]
 
         # to show deletion data
         grid_cell = []
         for i, row_data in enumerate(rows_to_delete):
             row_cell = []
             # Create a Checkbutton widget
-            tik_button = tk.Checkbutton(List, variable=tik_var[i], command=lambda: toggle_tik(i))
-            tik_button.grid(row=i+3, column= 1, padx=10, pady=10)
+            tik_button = tk.Checkbutton(List, variable=tik_var[i])
+            tik_button.grid(row=i + 3, column=1, padx=10, pady=10)
             for j, cell_value in enumerate(row_data):
                 if j == 6:
                     if cell_value is None:
