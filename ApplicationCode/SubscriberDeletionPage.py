@@ -36,7 +36,7 @@ def SubscriberDeletion(delete, home, root):
         delete.pack_forget()
         # calling the function deleteList from the file viewSubscriberPage
         import DeletionListPage as dl
-        dl.DeletionList(deleteList, home, rows_to_delete, row_number)
+        dl.DeletionList(root,deleteList, home, rows_to_delete, row_number)
 
     # function for selecting the type of cattle
     def cattle_select(event):

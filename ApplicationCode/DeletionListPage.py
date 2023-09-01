@@ -1,8 +1,25 @@
 import tkinter as tk
 from tkinter import ttk
+# function to search the cin number
+def existIn(elt,table):
+    i = 0
+    while i < len(table):
+        if elt == table[i]:
+            table.pop(i)
+            return True
+        i += 1
+    return False
 
+# function to get the row index to delete
+def searchIndex(table,data):
+    index_table = []
+    for i, row_data in enumerate(data):
+        cell_value = row_data[2]
+        if existIn(cell_value, table):
+            index_table.append(i)
+    return index_table
 
-def DeletionList(deleteList, home, rows_to_delete, row_number):
+def DeletionList(root, deleteList, home, rows_to_delete, row_number):
     # showing the DeletionList page
     deleteList.pack(expand=True, pady=10)
     # to create the scrollbar in the left
@@ -14,6 +31,12 @@ def DeletionList(deleteList, home, rows_to_delete, row_number):
     List = ttk.Frame(canvas)
     canvas.create_window((0, 0), window=List, anchor="nw")
 
+    def print_Subscribers_are_deleted_sucessfuly():
+        subscriber_deleted = ttk.Label(home, text=" ! تمت عملية الحذف بنجاح  ", font=("Helvetica", 30), anchor="center", foreground="red", background="white")
+        subscriber_deleted.grid(row=1, padx=10, pady=10)
+        def forget():
+            subscriber_deleted.grid_forget()
+        root.after(4000, forget)
     # function to handle the return the home page
     def return_to_home():
         deleteList.pack_forget()
@@ -21,20 +44,35 @@ def DeletionList(deleteList, home, rows_to_delete, row_number):
 
     # function to delete subscribers
     def deletion():
-        table = []
+        table_checked = []
+        # deleting the non checkbtn rows from rows_to_delete table
         for a in range(row_number):
-            if tik_var[a].get() == 1:
-                table.append(a)
+            if tik_var[a].get() == 0:
+                table_checked.append(a)
+        for elt in range(len(table_checked)-1,-1,-1):
+            print(rows_to_delete[table_checked[elt]])
+            rows_to_delete.pop(table_checked[elt])
+        # creating a table contains the CIN number of subscriber to delete
+        table_primary_keys = []
+        for i,row in enumerate(rows_to_delete):
+            table_primary_keys.append(row[2])
+
         import openpyxl as pxy
         # Load the Excel workbook
         excel_file_path = "subscriberlist.xlsx"
         workbook = pxy.load_workbook(excel_file_path)
         worksheet = workbook['Sheet']
-        # Iterate in reverse order to delete rows without affecting indices
-        for row_index in reversed(table):
-            worksheet.delete_rows(row_index)
-        return_to_home()
 
+        data = read_excel_data(excel_file_path)
+        index_table = searchIndex(table_primary_keys, data)
+
+        # Iterate in reverse order to delete rows without affecting indices
+        for row_index in reversed(index_table):
+            worksheet.delete_rows(row_index)
+        # Save the modified workbook
+        workbook.save(excel_file_path)
+        print_Subscribers_are_deleted_sucessfuly()
+        return_to_home()
     if rows_to_delete:
         # text for make sure the deletion
         ttk.Label(List, text="  هل  أنت  متأكد  من  حذف  هؤلاء  المشتركين   ", font=("Helvetica", 60), anchor="center",
@@ -76,3 +114,15 @@ def DeletionList(deleteList, home, rows_to_delete, row_number):
     # creating deletion button
     submit_button = ttk.Button(List, text=" حذف ", command=deletion)
     submit_button.grid(row=row_number + 6, column=6, columnspan=3, padx=10, pady=10)
+
+
+def read_excel_data(file_path):
+    import openpyxl
+    workbook = openpyxl.load_workbook(file_path)
+    sheet = workbook.active
+
+    data = []
+    for row in sheet.iter_rows(min_row=2, values_only=True):
+        data.append(row)
+
+    return data
