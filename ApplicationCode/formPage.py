@@ -43,6 +43,17 @@ def Form_Page(form, root, home):
             subscriber_exist.grid_forget()
         root.after(4000, forget)
 
+        # function to appear a msg when the new subscriber is added successfully
+    def print_Subscriber_added_successfully():
+        subscriber_added = ttk.Label(home, text=" ! تمت  إضافة  المشترك  بنجاح   ",
+                                     font=("Helvetica", 40), anchor="center", foreground="red", background="white")
+        subscriber_added.grid(row=1, padx=10, pady=10)
+
+        def forget():
+            subscriber_added.grid_forget()
+
+        root.after(4000, forget)
+
     #function to handle the return the home page
     def return_to_home():
         form.pack_forget()
@@ -68,6 +79,7 @@ def Form_Page(form, root, home):
                 save_to_excel(data)
                 print("Form submitted!")
                 return_to_home()
+                print_Subscriber_added_successfully()
             else:
                 print_Subscriber_Already_exist(data[2])
                 print("the person withb this national carte number already exist !")
