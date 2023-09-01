@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
-
+from tkinter import messagebox
+import os
 
 def SubscriberPage(view, home):
     # function for selecting the type of cattle
@@ -26,40 +27,44 @@ def SubscriberPage(view, home):
         grid_cells[row_index + 1:] = []
 
     def search():
-        entries = [entries_writed[i].get() for i in range(5)]
-        entries.append(combobox.get())
-        if combobox.get() == "الماشية":
-            entries.append(cattle_combobox.get())
+        if not os.path.exists('subscriberlist.xlsx'):
+            messagebox.showerror("خطأ", "لا يوجد أي إشتراك في القائمة . قم بإضافة المشترك أولا ! ")
+            return_to_home()
         else:
-            entries.append("")
-        delete_rows_after(6)
-        excel_data = read_excel_data("subscriberlist.xlsx")
-        data = []
+            entries = [entries_writed[i].get() for i in range(5)]
+            entries.append(combobox.get())
+            if combobox.get() == "الماشية":
+                entries.append(cattle_combobox.get())
+            else:
+                entries.append("")
+            delete_rows_after(6)
+            excel_data = read_excel_data("subscriberlist.xlsx")
+            data = []
 
-        for i, row_data in enumerate(excel_data):
-            test = True
-            for j in range(7):
-                cell_value = row_data[j]
-                if entries[j] == '':
-                    continue
-                else:
-                    if entries[j] != str(cell_value):
-                        test = False
-                        break
-            if test:
-                data.append(row_data)
-
-        # to show data
-        for i, row_data in enumerate(data):
-            row_cells = []
-            for j, cell_value in enumerate(row_data):
-                if j == 6:
-                    if cell_value is None:
+            for i, row_data in enumerate(excel_data):
+                test = True
+                for j in range(7):
+                    cell_value = row_data[j]
+                    if entries[j] == '':
                         continue
-                label = tk.Label(excel_frame, text=str(cell_value))
-                label.grid(row=i + 10, column=j + 2, padx=10, pady=10)
-                row_cells.append(label)
-            grid_cells.append(row_cells)
+                    else:
+                        if entries[j] != str(cell_value):
+                            test = False
+                            break
+                if test:
+                    data.append(row_data)
+
+            # to show data
+            for i, row_data in enumerate(data):
+                row_cells = []
+                for j, cell_value in enumerate(row_data):
+                    if j == 6:
+                        if cell_value is None:
+                            continue
+                    label = tk.Label(excel_frame, text=str(cell_value))
+                    label.grid(row=i + 10, column=j + 2, padx=10, pady=10)
+                    row_cells.append(label)
+                grid_cells.append(row_cells)
 
     view.pack(fill="both", expand=True)
     global grid_cells
@@ -125,11 +130,10 @@ def SubscriberPage(view, home):
 
 def read_excel_data(file_path):
     import openpyxl
-    workbook = openpyxl.load_workbook(file_path)
-    sheet = workbook.active
-
     data = []
-    for row in sheet.iter_rows(min_row=2, values_only=True):
-        data.append(row)
-
+    if os.path.exists('subscriberlist.xlsx'):
+        workbook = openpyxl.load_workbook(file_path)
+        sheet = workbook.active
+        for row in sheet.iter_rows(min_row=2, values_only=True):
+            data.append(row)
     return data

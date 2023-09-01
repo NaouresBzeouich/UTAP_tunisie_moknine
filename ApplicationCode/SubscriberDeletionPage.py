@@ -1,42 +1,45 @@
 import tkinter as tk
 from tkinter import ttk
-
-
+import os
+from tkinter import messagebox
 def SubscriberDeletion(delete, home, root):
     # function to the button delete subscriber
     def delete_subscriber():
-        # saving the entries
-        data = [entry.get() for entry in entries]
-        data.append(combobox.get())
-        if combobox.get() == "الماشية":
-            data.append(cattle_combobox.get())
+        if not os.path.exists('subscriberlist.xlsx'):
+            messagebox.showerror("خطأ", "لا يوجد أي إشتراك في القائمة . قم بإضافة المشترك أولا ! ")
+            return_to_home()
         else:
-            data.append("")
-        # test if there's subscriber with same details
-        rows_to_delete = []
-        excel_data = read_excel_data("subscriberlist.xlsx")
-        row_number = 0
-        for i, row_data in enumerate(excel_data):
-            test = True
-            for j in range(7):
-                cell_value = row_data[j]
-                if data[j] == '':
-                    continue
-                else:
-                    if data[j] != str(cell_value):
-                        test = False
-                        break
-            if test:
-                row_number += 1
-                rows_to_delete.append(row_data)
-
-        # creating the new frame that contains subscriber list to delete
-        deleteList = ttk.Frame(root)
-        # hiding the delete page which is the current page
-        delete.pack_forget()
-        # calling the function deleteList from the file viewSubscriberPage
-        import DeletionListPage as dl
-        dl.DeletionList(root,deleteList, home, rows_to_delete, row_number)
+            # saving the entries
+            data = [entry.get() for entry in entries]
+            data.append(combobox.get())
+            if combobox.get() == "الماشية":
+                data.append(cattle_combobox.get())
+            else:
+                data.append("")
+                # test if there's subscriber with same details
+                rows_to_delete = []
+                excel_data = read_excel_data("subscriberlist.xlsx")
+                row_number = 0
+                for i, row_data in enumerate(excel_data):
+                    test = True
+                    for j in range(7):
+                        cell_value = row_data[j]
+                        if data[j] == '':
+                            continue
+                        else:
+                            if data[j] != str(cell_value):
+                                test = False
+                                break
+                    if test:
+                        row_number += 1
+                        rows_to_delete.append(row_data)
+                # creating the new frame that contains subscriber list to delete
+                deleteList = ttk.Frame(root)
+                # hiding the delete page which is the current page
+                delete.pack_forget()
+                # calling the function deleteList from the file viewSubscriberPage
+                import DeletionListPage as dl
+                dl.DeletionList(root, deleteList, home, rows_to_delete, row_number)
 
     # function for selecting the type of cattle
     def cattle_select(event):
@@ -91,11 +94,10 @@ def SubscriberDeletion(delete, home, root):
 
 def read_excel_data(file_path):
     import openpyxl
-    workbook = openpyxl.load_workbook(file_path)
-    sheet = workbook.active
-
     data = []
-    for row in sheet.iter_rows(min_row=2, values_only=True):
-        data.append(row)
-
+    if os.path.exists('subscriberlist.xlsx'):
+        workbook = openpyxl.load_workbook(file_path)
+        sheet = workbook.active
+        for row in sheet.iter_rows(min_row=2, values_only=True):
+            data.append(row)
     return data

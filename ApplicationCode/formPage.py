@@ -3,11 +3,14 @@ from tkinter import ttk
 def Form_Page(form, root, home):
     # first we must test if subscriber list exist or we wil create it
     from openpyxl import Workbook
-    from openpyxl import load_workbook
     import os
+    # Create labels and entry fields for the form
+    labels = [": اسم ", ": اللقب ", " : رقم بطاقة الهوية الوطنية ", ": رقم الهاتف ", " : المنطقة ", " :النقابات القطاعية"]
     if not os.path.exists('subscriberlist.xlsx'):
         # Create a new Workbook
         wb = Workbook()
+        ws = wb.active
+        ws.append(labels)
         wb.save('subscriberlist.xlsx')
         wb.close()
     #Function to print the invalid results messages
@@ -99,8 +102,6 @@ def Form_Page(form, root, home):
 
     # showing the form page
     form.pack(pady=10)
-    # Create labels and entry fields for the form
-    labels = [": اسم ", ": اللقب ", " : رقم بطاقة الهوية الوطنية ", ": رقم الهاتف ", " : المنطقة ", " :النقابات القطاعية"]
     entries = [ttk.Entry(form, font=("Helvetica", 30)) for _ in range(5)]
     # Place labels and entry fields in the frame
     for i, label in enumerate(labels):

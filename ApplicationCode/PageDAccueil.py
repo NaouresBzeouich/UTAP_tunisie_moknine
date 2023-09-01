@@ -1,22 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 
-def HomePage():
-    # Create the main window
-    root = tk.Tk()
-
-    # Adding a title to the main window
-    root.title("الاتحاد التونسي للفلاحة والصيد البحري Union tunisienne de l'agriculture et de la pêche  ")
-
-    # Setting dimensions (width x height)
-    root.geometry("1900x1000")
-
-    # Set the path to your custom icon file (use a .ico format)
-    iconpath = 'C:/Users/R I B/Desktop/STAGE/UTAP_tunisie_moknine/utap (2).ico'
-
-    # Set the window's icon
-    root.iconbitmap(iconpath)
-
+def HomePage(root):
     # creating home page frame
     home = ttk.Frame(root)
 
@@ -66,11 +51,11 @@ def HomePage():
     ViewSubscribersButton.grid(row=10, padx=10, pady=10)
     ttk.Label(home, text="\n").grid(row=11)
     deleteASubscriberButton.grid(row=12, padx=10, pady=10)
+
     # showing the home page
     home.pack()
 
     # Increase the button size
     ttk.Style().configure("TButton", font=("Helvetica", 30), padding=5, anchor="e")
 
-    # Start the GUI event loop
-    root.mainloop()
+
