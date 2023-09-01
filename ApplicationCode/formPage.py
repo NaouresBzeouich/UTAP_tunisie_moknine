@@ -1,6 +1,15 @@
 import tkinter as tk
 from tkinter import ttk
 def Form_Page(form, root, home):
+    # first we must test if subscriber list exist or we wil create it
+    from openpyxl import Workbook
+    from openpyxl import load_workbook
+    import os
+    if not os.path.exists('subscriberlist.xlsx'):
+        # Create a new Workbook
+        wb = Workbook()
+        wb.save('subscriberlist.xlsx')
+        wb.close()
     #Function to print the invalid results messages
     def print_Errors(table):
         text = "الرجاء التثبت "
@@ -141,14 +150,8 @@ def validate_entries(form, entries, selected_option):
 def save_to_excel(data):
     from openpyxl import Workbook
     from openpyxl import load_workbook
-    import os
-    if os.path.exists('subscriberlist.xlsx'):
-        wb = load_workbook('subscriberlist.xlsx')
-        ws = wb.active
-    else:
-        print("erreur the document excel not found :( ")
-        exit(1)
-
+    wb = load_workbook('subscriberlist.xlsx')
+    ws = wb.active
     ws.append(data)
     wb.save('subscriberlist.xlsx')
 
