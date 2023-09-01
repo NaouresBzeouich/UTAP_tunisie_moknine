@@ -43,8 +43,7 @@ def SubscriberPage(view, home):
 
             for i, row_data in enumerate(excel_data):
                 test = True
-                for j in range(7):
-                    cell_value = row_data[j]
+                for j,cell_value in enumerate(row_data):
                     if entries[j] == '':
                         continue
                     else:

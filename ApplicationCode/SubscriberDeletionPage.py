@@ -16,30 +16,30 @@ def SubscriberDeletion(delete, home, root):
                 data.append(cattle_combobox.get())
             else:
                 data.append("")
-                # test if there's subscriber with same details
-                rows_to_delete = []
-                excel_data = read_excel_data("subscriberlist.xlsx")
-                row_number = 0
-                for i, row_data in enumerate(excel_data):
-                    test = True
-                    for j in range(7):
-                        cell_value = row_data[j]
-                        if data[j] == '':
-                            continue
-                        else:
-                            if data[j] != str(cell_value):
-                                test = False
-                                break
-                    if test:
-                        row_number += 1
-                        rows_to_delete.append(row_data)
-                # creating the new frame that contains subscriber list to delete
-                deleteList = ttk.Frame(root)
-                # hiding the delete page which is the current page
-                delete.pack_forget()
-                # calling the function deleteList from the file viewSubscriberPage
-                import DeletionListPage as dl
-                dl.DeletionList(root, deleteList, home, rows_to_delete, row_number)
+
+            # test if there's subscriber with same details
+            rows_to_delete = []
+            excel_data = read_excel_data("subscriberlist.xlsx")
+            row_number = 0
+            for i, row_data in enumerate(excel_data):
+                test = True
+                for j, cell_value in enumerate(row_data):
+                    if data[j] == '':
+                        continue
+                    else:
+                        if data[j] != str(cell_value):
+                            test = False
+                            break
+                if test:
+                    row_number += 1
+                    rows_to_delete.append(row_data)
+            # creating the new frame that contains subscriber list to delete
+            deleteList = ttk.Frame(root)
+            # hiding the delete page which is the current page
+            delete.pack_forget()
+            # calling the function deleteList from the file viewSubscriberPage
+            import DeletionListPage as dl
+            dl.DeletionList(root, deleteList, home, rows_to_delete, row_number)
 
     # function for selecting the type of cattle
     def cattle_select(event):
