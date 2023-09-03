@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 
-def HomePage(root):
+def HomePage(root, user_name, admin_name):
     # creating home page frame
     home = ttk.Frame(root)
 
@@ -39,19 +39,21 @@ def HomePage(root):
         import SubscriberDeletionPage as sp
         sp.SubscriberDeletion(delete, home,root)
     # Create buttons
-    AddingInscriptionButton = ttk.Button(home, text="إضافة مشترك جديد ", command=AddAFarmer)
-    ViewSubscribersButton = ttk.Button(home, text="عرض قائمة المشتركين", command=ViewSubscriberList)
-    deleteASubscriberButton = ttk.Button(home, text="حذف مشترك ", command=deleteASubscriber)
+    adding_inscription_button = ttk.Button(home, text="إضافة مشترك جديد ", command=AddAFarmer)
+    view_subscribers_button = ttk.Button(home, text="عرض قائمة المشتركين", command=ViewSubscriberList)
 
     # Place buttons in the home page
     for i in range(7):
         ttk.Label(home, text="\n").grid(row=i)
-    AddingInscriptionButton.grid(row=8, padx=10, pady=10)
+    adding_inscription_button.grid(row=8, padx=10, pady=10)
     ttk.Label(home, text="\n").grid(row=9)
-    ViewSubscribersButton.grid(row=10, padx=10, pady=10)
+    view_subscribers_button.grid(row=10, padx=10, pady=10)
     ttk.Label(home, text="\n").grid(row=11)
-    deleteASubscriberButton.grid(row=12, padx=10, pady=10)
 
+    # adding the deletion function for only admin user
+    if user_name == admin_name:
+        delete_a_subscriber_button = ttk.Button(home, text="حذف مشترك ", command=deleteASubscriber)
+        delete_a_subscriber_button.grid(row=12, padx=10, pady=10)
     # showing the home page
     home.pack()
 

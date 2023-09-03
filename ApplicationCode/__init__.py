@@ -26,26 +26,55 @@ if not os.path.exists('userList.xlsx'):
     wb.close()
 
 
+def read_excel_data_UserList():
+    import openpyxl
+    data = []
+    if os.path.exists('userList.xlsx'):
+        workbook = openpyxl.load_workbook('userList.xlsx')
+        sheet = workbook.active
+        for row in sheet.iter_rows(min_row=2, values_only=True):
+            data.append(row)
+    return data
+
+def print_alert(msg):
+    label = ttk.Label(frame, text=msg,
+                          font=("Helvetica", 30), anchor="center", foreground="red", background="white")
+    label.grid(row=9, column=1, columnspan=4, padx=10, pady=10)
+    def forget():
+        label.grid_forget()
+
+    root.after(4000, forget)
+
 def check_password(correct_password):
-    entered_password = psw.get()
-    if not entered_password == correct_password:
-        wrong_psw = ttk.Label(frame, text=" ! الرجاء التثبت من كلمة العبور   ",
-                              font=("Helvetica", 30), anchor="center", foreground="red", background="white")
-        wrong_psw.grid(row=9, column=1, columnspan=4, padx=10, pady=10)
-
-        def forget():
-            wrong_psw.grid_forget()
-
-        root.after(4000, forget)
+    entered_password = str(psw.get())
+    if not entered_password == str(correct_password):
+        print_alert(" ! الرجاء التثبت من كلمة العبور  ")
         return False
     return True
 
 
+def search_user_name(user_name, data):
+    for i, row in enumerate(data):
+        print(row)
+        print(row[0], user_name)
+        if str(user_name) == str(row[0]):
+            return row[1]
+    return False
+
+
 def go_to_home():
-    correct_password = 'your_password'
-    if check_password(correct_password):
-        frame.pack_forget()
-        HomePage(root)
+    excel_data = read_excel_data_UserList()
+    if name.get() == '':
+        print_alert(" لم  تقم  بتعمير  خانة  الإسم  ")
+    else:
+        correct_password = search_user_name(name.get(), excel_data)
+        if not correct_password:
+            print_alert(" الإسم الذي تمّ إدخاله غير مسجل في القاعدة ")
+        else:
+            if check_password(correct_password):
+                frame.pack_forget()
+                HomePage(root, str(name.get()), "admin")
+
 
 
 # creating user and password labels and entries
