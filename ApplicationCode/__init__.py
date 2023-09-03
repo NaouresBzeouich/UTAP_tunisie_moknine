@@ -55,8 +55,6 @@ def check_password(correct_password):
 
 def search_user_name(user_name, data):
     for i, row in enumerate(data):
-        print(row)
-        print(row[0], user_name)
         if str(user_name) == str(row[0]):
             return row[1]
     return False
@@ -85,7 +83,7 @@ ttk.Label(frame, text=": الإسم  ", font=("Helvetica", 40)).grid(row=5, colu
 name = ttk.Entry(frame, font=("Helvetica", 40))
 name.grid(row=5, column=2, padx=20, pady=30, sticky="e")
 
-ttk.Label(frame, text=": رمز السرِّي   ", font=("Helvetica", 40)).grid(row=6, column=3)
+ttk.Label(frame, text=": الرمز السرِّي   ", font=("Helvetica", 40)).grid(row=6, column=3)
 psw = ttk.Entry(frame, font=("Helvetica", 40), show='*')
 psw.grid(row=6, column=2, padx=20, pady=30, sticky="e")
 
