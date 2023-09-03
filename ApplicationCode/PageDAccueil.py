@@ -43,8 +43,8 @@ def HomePage(root, user_name, admin_name):
         print("Button to add a new user is clicked !")
         add_user = ttk.Frame(root)
         home.pack_forget()
-        import AddUserPage as ad
-        ad.addingNewUser(add_user, home, root)
+        import AddUserPage as addUser
+        addUser.addingNewUser(add_user, home, root)
 
     # Create buttons
     adding_inscription_button = ttk.Button(home, text="إضافة مشترك جديد ", command=AddAFarmer)
