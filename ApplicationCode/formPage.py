@@ -161,7 +161,6 @@ def validate_entries(form, entries, selected_option):
 
 # Function to save data to Excel
 def save_to_excel(data):
-    from openpyxl import Workbook
     from openpyxl import load_workbook
     wb = load_workbook('subscriberlist.xlsx')
     ws = wb.active
