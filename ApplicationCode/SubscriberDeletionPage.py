@@ -2,6 +2,8 @@ import tkinter as tk
 from tkinter import ttk
 import os
 from tkinter import messagebox
+
+
 def SubscriberDeletion(delete, home, root):
     # function to the button delete subscriber
     def delete_subscriber():

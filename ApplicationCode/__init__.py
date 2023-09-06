@@ -1,4 +1,4 @@
-from PageDAccueil import *
+import tkinter as tk
 from openpyxl import Workbook
 import os
 
@@ -12,10 +12,14 @@ root.title("الاتحاد التونسي للفلاحة والصيد البحر
 root.geometry("1900x1000")
 
 # Set the path to your custom icon file (use a .ico format)
-iconpath = 'C:/Users/R I B/Desktop/STAGE/UTAP_tunisie_moknine/utap (2).ico'
-# Set the window's icon
-root.iconbitmap(iconpath)
+icon_path = 'utap (2).ico'
+# Check if the icon file exists and then set it
+if os.path.exists(icon_path):
+    root.iconbitmap(icon_path)
+else:
+    print("Icon file not found:", icon_path)
 
+from PageDAccueil import *
 # create the initial frame
 frame = ttk.Frame(root)
 
@@ -36,14 +40,17 @@ def read_excel_data_UserList():
             data.append(row)
     return data
 
+
 def print_alert(msg):
     label = ttk.Label(frame, text=msg,
-                          font=("Helvetica", 30), anchor="center", foreground="red", background="white")
+                      font=("Helvetica", 30), anchor="center", foreground="red", background="white")
     label.grid(row=9, column=1, columnspan=4, padx=10, pady=10)
+
     def forget():
         label.grid_forget()
 
     root.after(4000, forget)
+
 
 def check_password(correct_password):
     entered_password = str(psw.get())
@@ -72,7 +79,6 @@ def go_to_home():
             if check_password(correct_password):
                 frame.pack_forget()
                 HomePage(root, str(name.get()), "admin")
-
 
 
 # creating user and password labels and entries

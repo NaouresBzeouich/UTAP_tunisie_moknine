@@ -3,6 +3,7 @@ from tkinter import ttk
 from tkinter import messagebox
 import os
 
+
 def SubscriberPage(view, home):
     # function for selecting the type of cattle
     def cattle_select(event):
@@ -43,7 +44,7 @@ def SubscriberPage(view, home):
 
             for i, row_data in enumerate(excel_data):
                 test = True
-                for j,cell_value in enumerate(row_data):
+                for j, cell_value in enumerate(row_data):
                     if entries[j] == '':
                         continue
                     else:
@@ -88,7 +89,8 @@ def SubscriberPage(view, home):
     # Place labels and entry fields in the frame
     for i, label in enumerate(labels):
         row_cells = []
-        ttk.Label(excel_frame, text=label, font=("Helvetica", 25), anchor="e").grid(row=i, column=6,columnspan=2, padx=20, pady=5,
+        ttk.Label(excel_frame, text=label, font=("Helvetica", 25), anchor="e").grid(row=i, column=6, columnspan=2,
+                                                                                    padx=20, pady=5,
                                                                                     sticky="e")
         row_cells.append(label)
         if i < 5:
@@ -113,7 +115,7 @@ def SubscriberPage(view, home):
 
     # creating buttons
     submit_button = ttk.Button(excel_frame, text="بحث عن المشتركين ", command=search, padding=8)
-    submit_button.grid(row=8, column=4,columnspan=2, sticky="e")
+    submit_button.grid(row=8, column=4, columnspan=2, sticky="e")
     return_to_home_btn = ttk.Button(excel_frame, text=" الرجوع إلى الصفحة الرئيسية ", command=return_to_home, padding=8)
     return_to_home_btn.grid(row=8, column=2, columnspan=2, pady=20)
 

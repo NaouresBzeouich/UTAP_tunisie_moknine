@@ -1,0 +1,56 @@
+('C:\\Users\\R I B\\Desktop\\STAGE\\UTAP_tunisie_moknine\\build\\app\\App.pkg',
+ {'BINARY': True,
+  'DATA': True,
+  'EXECUTABLE': True,
+  'EXTENSION': True,
+  'PYMODULE': True,
+  'PYSOURCE': True,
+  'PYZ': False,
+  'SPLASH': True},
+ [('PYZ-00.pyz',
+   'C:\\Users\\R I '
+   'B\\Desktop\\STAGE\\UTAP_tunisie_moknine\\build\\app\\PYZ-00.pyz',
+   'PYZ'),
+  ('struct',
+   'C:\\Users\\R I '
+   'B\\Desktop\\STAGE\\UTAP_tunisie_moknine\\build\\app\\localpycs\\struct.pyc',
+   'PYMODULE'),
+  ('pyimod01_archive',
+   'C:\\Users\\R I '
+   'B\\Desktop\\STAGE\\UTAP_tunisie_moknine\\build\\app\\localpycs\\pyimod01_archive.pyc',
+   'PYMODULE'),
+  ('pyimod02_importers',
+   'C:\\Users\\R I '
+   'B\\Desktop\\STAGE\\UTAP_tunisie_moknine\\build\\app\\localpycs\\pyimod02_importers.pyc',
+   'PYMODULE'),
+  ('pyimod03_ctypes',
+   'C:\\Users\\R I '
+   'B\\Desktop\\STAGE\\UTAP_tunisie_moknine\\build\\app\\localpycs\\pyimod03_ctypes.pyc',
+   'PYMODULE'),
+  ('pyimod04_pywin32',
+   'C:\\Users\\R I '
+   'B\\Desktop\\STAGE\\UTAP_tunisie_moknine\\build\\app\\localpycs\\pyimod04_pywin32.pyc',
+   'PYMODULE'),
+  ('pyiboot01_bootstrap',
+   'C:\\Users\\R I '
+   'B\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PyInstaller\\loader\\pyiboot01_bootstrap.py',
+   'PYSOURCE'),
+  ('pyi_rth_inspect',
+   'C:\\Users\\R I '
+   'B\\AppData\\Local\\Programs\\Python\\Python310\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks\\pyi_rth_inspect.py',
+   'PYSOURCE'),
+  ('pyi_rth__tkinter',
+   'C:\\Users\\R I '
+   'B\\AppData\\Local\\Programs\\Python\\Python310\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks\\pyi_rth__tkinter.py',
+   'PYSOURCE'),
+  ('__init__',
+   'C:\\Users\\R I '
+   'B\\Desktop\\STAGE\\UTAP_tunisie_moknine\\ApplicationCode\\__init__.py',
+   'PYSOURCE')],
+ True,
+ False,
+ False,
+ [],
+ None,
+ None,
+ None)
