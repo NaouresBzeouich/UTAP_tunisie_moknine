@@ -7,9 +7,12 @@ root = tk.Tk()
 
 # Adding a title to the main window
 root.title("الاتحاد التونسي للفلاحة والصيد البحري Union tunisienne de l'agriculture et de la pêche  ")
+# Get the screen width and height
+screen_width = root.winfo_screenwidth()
+screen_height = root.winfo_screenheight()
 
-# Setting dimensions (width x height)
-root.geometry("1900x1000")
+# Set the window size to match the screen size
+root.geometry(f"{screen_width}x{screen_height}")
 
 # Set the path to your custom icon file (use a .ico format)
 icon_path = 'utap (2).ico'
