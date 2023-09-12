@@ -1,5 +1,8 @@
 import tkinter as tk
-from openpyxl import Workbook
+from tkinter import ttk
+import outputInputXlFile as xl
+import frontEnd as fe
+import PageDAccueil as pa
 import os
 
 # Create the main window
@@ -22,43 +25,16 @@ if os.path.exists(icon_path):
 else:
     print("Icon file not found:", icon_path)
 
-from PageDAccueil import *
 # create the initial frame
 frame = ttk.Frame(root)
 
-# test if user list exist or we wil create it
-if not os.path.exists('userList.xlsx'):
-    wb = Workbook()  # Create a new Workbook
-    wb.save('userList.xlsx')
-    wb.close()
-
-
-def read_excel_data_UserList():
-    import openpyxl
-    data = []
-    if os.path.exists('userList.xlsx'):
-        workbook = openpyxl.load_workbook('userList.xlsx')
-        sheet = workbook.active
-        for row in sheet.iter_rows(min_row=2, values_only=True):
-            data.append(row)
-    return data
-
-
-def print_alert(msg):
-    label = ttk.Label(frame, text=msg,
-                      font=("Helvetica", 30), anchor="center", foreground="red", background="white")
-    label.grid(row=9, column=1, columnspan=4, padx=10, pady=10)
-
-    def forget():
-        label.grid_forget()
-
-    root.after(4000, forget)
+xl.testExistingXlFile('userList.xlsx')
 
 
 def check_password(correct_password):
     entered_password = str(psw.get())
     if not entered_password == str(correct_password):
-        print_alert(" ! الرجاء التثبت من كلمة العبور  ")
+        fe.print_alert(" ! الرجاء التثبت من كلمة العبور  ", root, frame, 9, 1)
         return False
     return True
 
@@ -71,32 +47,32 @@ def search_user_name(user_name, data):
 
 
 def go_to_home():
-    excel_data = read_excel_data_UserList()
+    excel_data = xl.read_excel_data_UserList('userList.xlsx')
     if name.get() == '':
-        print_alert(" لم  تقم  بتعمير  خانة  الإسم  ")
+        fe.print_alert(" لم  تقم  بتعمير  خانة  الإسم  ", root, frame, 9, 1)
     else:
         correct_password = search_user_name(name.get(), excel_data)
         if not correct_password:
-            print_alert(" الإسم الذي تمّ إدخاله غير مسجل في القاعدة ")
+            fe.print_alert(" الإسم الذي تمّ إدخاله غير مسجل في القاعدة ", root, frame, 9, 1)
         else:
             if check_password(correct_password):
                 frame.pack_forget()
-                HomePage(root, str(name.get()), "admin")
+                pa.HomePage(root, str(name.get()), "admin")
 
 
 # creating user and password labels and entries
 for i in range(2):
-    ttk.Label(frame, text="\n", font=("Helvetica", 40)).grid(row=i, column=3)
+    fe.addLabel(frame, "\n", i)
 
-ttk.Label(frame, text=": الإسم  ", font=("Helvetica", 40)).grid(row=5, column=3)
+fe.addLabel(frame, ": الإسم  ", 5, 3, 40)
 name = ttk.Entry(frame, font=("Helvetica", 40))
 name.grid(row=5, column=2, padx=20, pady=30, sticky="e")
 
-ttk.Label(frame, text=": الرمز السرِّي   ", font=("Helvetica", 40)).grid(row=6, column=3)
+fe.addLabel(frame, ": الرمز السرِّي   ", 6, 3, 40)
 psw = ttk.Entry(frame, font=("Helvetica", 40), show='*')
 psw.grid(row=6, column=2, padx=20, pady=30, sticky="e")
 
-ttk.Label(frame, text="\n", font=("Helvetica", 40)).grid(row=7, column=3)
+fe.addLabel(frame, "\n", 7)
 
 # creating a btn to go to home page
 submit_button = ttk.Button(frame, text=" دخول  ", command=go_to_home)
