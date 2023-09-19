@@ -65,23 +65,16 @@ for i in range(2):
     fe.addLabel(frame, "\n", i)
 
 fe.addLabel(frame, ": الإسم  ", 5, 3, 40)
-name = ttk.Entry(frame, font=("Helvetica", 40))
-name.grid(row=5, column=2, padx=20, pady=30, sticky="e")
+name = fe.addEntry(frame, 5, 2)
 
 fe.addLabel(frame, ": الرمز السرِّي   ", 6, 3, 40)
-psw = ttk.Entry(frame, font=("Helvetica", 40), show='*')
-psw.grid(row=6, column=2, padx=20, pady=30, sticky="e")
-
-fe.addLabel(frame, "\n", 7)
+psw = fe.addPswdEntry(frame, 6, 2)
 
 # creating a btn to go to home page
-submit_button = ttk.Button(frame, text=" دخول  ", command=go_to_home)
-submit_button.grid(row=8, column=2, columnspan=2, padx=10, pady=10)
+fe.addLabel(frame, "\n", 7)
+fe.addBttn(frame, go_to_home, 8, 2, 40)
 
 frame.pack()
-
-# Increase the button size0
-ttk.Style().configure("TButton", font=("Helvetica", 40), padding=5, anchor="e")
 
 # Start the GUI event loop
 root.mainloop()

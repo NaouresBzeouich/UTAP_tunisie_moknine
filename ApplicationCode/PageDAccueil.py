@@ -1,15 +1,14 @@
 import tkinter as tk
 from tkinter import ttk
+import frontEnd as fe
 
 
 def HomePage(root, user_name, admin_name):
     # creating home page frame
     home = ttk.Frame(root)
 
-    # creating the command to the buttoms
+    # creating the command to the buttons
     def AddAFarmer():
-        # to make sure that everything is okkey
-        print("Button to add a subscriber is clicked !")
         # creating the form page
         form = ttk.Frame(root)
         # hiding the home page which is the current page
@@ -77,5 +76,4 @@ def HomePage(root, user_name, admin_name):
     # showing the home page
     home.pack()
 
-    # Increase the button size
-    ttk.Style().configure("TButton", font=("Helvetica", 30), padding=5, anchor="e")
+
