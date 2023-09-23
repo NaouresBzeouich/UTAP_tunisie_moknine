@@ -47,7 +47,7 @@ def search_user_name(user_name, data):
 
 
 def go_to_home():
-    excel_data = xl.read_excel_data_UserList('userList.xlsx')
+    excel_data = xl.read_excel_data('userList.xlsx')
     if name.get() == '':
         fe.print_alert(" لم  تقم  بتعمير  خانة  الإسم  ", root, frame, 9, 1)
     else:
@@ -72,7 +72,7 @@ psw = fe.addPswdEntry(frame, 6, 2)
 
 # creating a btn to go to home page
 fe.addLabel(frame, "\n", 7)
-fe.addBttn(frame, go_to_home, 8, 2, 40)
+fe.addBttn(frame, go_to_home," دخول  ", 8, 2, 40)
 
 frame.pack()
 

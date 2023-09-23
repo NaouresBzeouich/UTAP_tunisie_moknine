@@ -16,9 +16,9 @@ def print_alert(msg, root, frame, row, colmn):
 def addLabel(frame, text, row, colmn=1, size=40):
     ttk.Label(frame, text=text, font=("Helvetica", size)).grid(row=row, column=colmn)
 
-def addBttn(frame,action,row,colmn=1,size=40):
+def addBttn(frame,action,text,row,colmn=1,size=40):
     # creating a btn to go to home page
-    submit_button = ttk.Button(frame, text=" دخول  ", command=action)
+    submit_button = ttk.Button(frame, text=text, command=action)
     submit_button.grid(row=row, column=colmn, columnspan=2, padx=10, pady=10)
     # Increase the button size
     ttk.Style().configure("TButton", font=("Helvetica", size), padding=5, anchor="e")

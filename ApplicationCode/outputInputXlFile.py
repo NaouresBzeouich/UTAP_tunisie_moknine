@@ -10,7 +10,7 @@ def testExistingXlFile(path):
         wb.close()
 
 
-def read_excel_data_UserList(path):
+def read_excel_data(path):
     import openpyxl
     data = []
     if os.path.exists(path):
