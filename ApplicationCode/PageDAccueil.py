@@ -2,7 +2,7 @@ from tkinter import ttk
 import frontEnd as fe
 
 
-def HomePage(root, user_name, admin_name):
+def HomePage(root,frame, user_name, admin_name):
     # creating home page frame
     home = ttk.Frame(root)
 
@@ -39,22 +39,22 @@ def HomePage(root, user_name, admin_name):
 
     # Place buttons in the home page
     if user_name == admin_name:  # adding the deletion function for only admin user
-        fe.addLabel(home,'\n',1)
-        fe.addBttn(home,AddAFarmer,"إضافة مشترك جديد ",2)
-        fe.addLabel(home, '\n', 3)
-        fe.addBttn(home,ViewSubscriberList,"عرض قائمة المشتركين",4)
-        fe.addLabel(home, '\n', 5)
-        fe.addBttn(home, deleteASubscriber, "حذف مشترك ", 6)
-        fe.addLabel(home, '\n', 7)
-        fe.addBttn(home, addNewUser, " إضافة حساب جديد ", 8)
+        fe.addLabel(home,'\t\n',1,2)
+        fe.addBttn(home,AddAFarmer,"إضافة مشترك جديد ",2,4)
+        fe.addLabel(home, '\t\n', 3,5)
+        fe.addBttn(home,ViewSubscriberList,"عرض قائمة المشتركين",4,4)
+        fe.addLabel(home, '\t\n', 5,3)
+        fe.addBttn(home, deleteASubscriber, "حذف مشترك ", 6,4)
+        fe.addLabel(home, '\t\n', 7,6)
+        fe.addBttn(home, addNewUser, " إضافة حساب جديد ", 8,4)
 
     else:
-        for i in range(3):
-            fe.addLabel(home, '\n', i)
-        fe.addBttn(home, AddAFarmer, "إضافة مشترك جديد ", 4)
-        fe.addLabel(home, '\n', 5)
-        fe.addBttn(home, ViewSubscriberList, "عرض قائمة المشتركين", 6)
-        fe.addLabel(home, '\n', 7)
-
+        fe.addLabel(home, '\t\n', 1,2)
+        fe.addLabel(home, '\t\n',2,3)
+        fe.addBttn(home, AddAFarmer, "إضافة مشترك جديد ", 4,4)
+        fe.addLabel(home, '\t\n', 5,5)
+        fe.addBttn(home, ViewSubscriberList, "عرض قائمة المشتركين", 6,4)
+        fe.addLabel(home, '\t\n', 7,6)
+    fe.LogOut(root, home, frame)
     # showing the home page
     home.pack()

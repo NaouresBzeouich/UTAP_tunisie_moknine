@@ -48,16 +48,19 @@ def search_user_name(user_name, data):
 
 def go_to_home():
     excel_data = xl.read_excel_data('userList.xlsx')
-    if name.get() == '':
+    username = name.get()
+    if username == '':
         fe.print_alert(" لم  تقم  بتعمير  خانة  الإسم  ", root, frame, 9, 1)
     else:
-        correct_password = search_user_name(name.get(), excel_data)
+        correct_password = search_user_name(username, excel_data)
         if not correct_password:
             fe.print_alert(" الإسم الذي تمّ إدخاله غير مسجل في القاعدة ", root, frame, 9, 1)
         else:
             if check_password(correct_password):
+                name.delete(0, tk.END)
+                psw.delete(0, tk.END)
                 frame.pack_forget()
-                pa.HomePage(root, str(name.get()), "admin")
+                pa.HomePage(root,frame, str(username), "admin")
 
 
 # creating user and password labels and entries
