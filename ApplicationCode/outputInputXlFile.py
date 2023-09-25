@@ -16,6 +16,6 @@ def read_excel_data(path):
     if os.path.exists(path):
         workbook = openpyxl.load_workbook(path)
         sheet = workbook.active
-        for row in sheet.iter_rows(min_row=2, values_only=True):
+        for row in sheet.iter_rows(min_row=1, values_only=True):
             data.append(row)
     return data
